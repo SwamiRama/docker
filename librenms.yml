@@ -30,8 +30,16 @@ services:
   msmtpd:
     image: crazymax/msmtpd:latest
     container_name: librenms_msmtpd
-    env_file:
-      - "./msmtpd.env"
+    environment:
+      - "SMTP_HOST=${SMTP_HOST}"
+      - "SMTP_PORT=${SMTP_PORT}"
+      - "SMTP_TLS=${SMTP_TLS}"
+      - "SMTP_STARTTLS=${SMTP_STARTTLS}"
+      - "SMTP_TLS_CHECKCERT=${SMTP_TLS_CHECKCERT}"
+      - "SMTP_AUTH=${SMTP_AUTH}"
+      - "SMTP_USER=${SMTP_USER}"
+      - "SMTP_PASSWORD=${SMTP_PASSWORD}"
+      - "SMTP_FROM=${SMTP_FROM}"
     restart: always
 
   librenms:
@@ -51,8 +59,6 @@ services:
       - msmtpd
     volumes:
       - "./librenms:/data"
-    env_file:
-      - "./librenms.env"
     environment:
       - "TZ=${TZ}"
       - "PUID=${PUID}"
@@ -62,6 +68,19 @@ services:
       - "DB_USER=${MYSQL_USER}"
       - "DB_PASSWORD=${MYSQL_PASSWORD}"
       - "DB_TIMEOUT=60"
+      - "MEMORY_LIMIT=${MEMORY_LIMIT}"
+      - "MAX_INPUT_VARS=${MAX_INPUT_VARS}"
+      - "UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE}"
+      - "OPCACHE_MEM_SIZE=${OPCACHE_MEM_SIZE}"
+      - "REAL_IP_FROM=${REAL_IP_FROM}"
+      - "REAL_IP_HEADER=${REAL_IP_HEADER}"
+      - "LOG_IP_VAR=${LOG_IP_VAR}"
+      - "CACHE_DRIVER=${CACHE_DRIVER}"
+      - "SESSION_DRIVER=${SESSION_DRIVER}"
+      - "REDIS_HOST=${REDIS_HOST}"
+      - "LIBRENMS_SNMP_COMMUNITY=${LIBRENMS_SNMP_COMMUNITY}"
+      - "LIBRENMS_WEATHERMAP=${LIBRENMS_WEATHERMAP}"
+      - "LIBRENMS_WEATHERMAP_SCHEDULE=${LIBRENMS_WEATHERMAP_SCHEDULE}"
     restart: always
 
   dispatcher:
@@ -76,8 +95,6 @@ services:
       - redis
     volumes:
       - "./librenms:/data"
-    env_file:
-      - "./librenms.env"
     environment:
       - "TZ=${TZ}"
       - "PUID=${PUID}"
@@ -89,6 +106,19 @@ services:
       - "DB_TIMEOUT=60"
       - "DISPATCHER_NODE_ID=dispatcher1"
       - "SIDECAR_DISPATCHER=1"
+      - "MEMORY_LIMIT=${MEMORY_LIMIT}"
+      - "MAX_INPUT_VARS=${MAX_INPUT_VARS}"
+      - "UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE}"
+      - "OPCACHE_MEM_SIZE=${OPCACHE_MEM_SIZE}"
+      - "REAL_IP_FROM=${REAL_IP_FROM}"
+      - "REAL_IP_HEADER=${REAL_IP_HEADER}"
+      - "LOG_IP_VAR=${LOG_IP_VAR}"
+      - "CACHE_DRIVER=${CACHE_DRIVER}"
+      - "SESSION_DRIVER=${SESSION_DRIVER}"
+      - "REDIS_HOST=${REDIS_HOST}"
+      - "LIBRENMS_SNMP_COMMUNITY=${LIBRENMS_SNMP_COMMUNITY}"
+      - "LIBRENMS_WEATHERMAP=${LIBRENMS_WEATHERMAP}"
+      - "LIBRENMS_WEATHERMAP_SCHEDULE=${LIBRENMS_WEATHERMAP_SCHEDULE}"
     restart: always
 
   syslogng:
@@ -110,8 +140,6 @@ services:
         protocol: udp
     volumes:
       - "./librenms:/data"
-    env_file:
-      - "./librenms.env"
     environment:
       - "TZ=${TZ}"
       - "PUID=${PUID}"
@@ -122,6 +150,19 @@ services:
       - "DB_PASSWORD=${MYSQL_PASSWORD}"
       - "DB_TIMEOUT=60"
       - "SIDECAR_SYSLOGNG=1"
+      - "MEMORY_LIMIT=${MEMORY_LIMIT}"
+      - "MAX_INPUT_VARS=${MAX_INPUT_VARS}"
+      - "UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE}"
+      - "OPCACHE_MEM_SIZE=${OPCACHE_MEM_SIZE}"
+      - "REAL_IP_FROM=${REAL_IP_FROM}"
+      - "REAL_IP_HEADER=${REAL_IP_HEADER}"
+      - "LOG_IP_VAR=${LOG_IP_VAR}"
+      - "CACHE_DRIVER=${CACHE_DRIVER}"
+      - "SESSION_DRIVER=${SESSION_DRIVER}"
+      - "REDIS_HOST=${REDIS_HOST}"
+      - "LIBRENMS_SNMP_COMMUNITY=${LIBRENMS_SNMP_COMMUNITY}"
+      - "LIBRENMS_WEATHERMAP=${LIBRENMS_WEATHERMAP}"
+      - "LIBRENMS_WEATHERMAP_SCHEDULE=${LIBRENMS_WEATHERMAP_SCHEDULE}"
     restart: always
 
   snmptrapd:
@@ -143,8 +184,6 @@ services:
         protocol: udp
     volumes:
       - "./librenms:/data"
-    env_file:
-      - "./librenms.env"
     environment:
       - "TZ=${TZ}"
       - "PUID=${PUID}"
@@ -155,4 +194,17 @@ services:
       - "DB_PASSWORD=${MYSQL_PASSWORD}"
       - "DB_TIMEOUT=60"
       - "SIDECAR_SNMPTRAPD=1"
+      - "MEMORY_LIMIT=${MEMORY_LIMIT}"
+      - "MAX_INPUT_VARS=${MAX_INPUT_VARS}"
+      - "UPLOAD_MAX_SIZE=${UPLOAD_MAX_SIZE}"
+      - "OPCACHE_MEM_SIZE=${OPCACHE_MEM_SIZE}"
+      - "REAL_IP_FROM=${REAL_IP_FROM}"
+      - "REAL_IP_HEADER=${REAL_IP_HEADER}"
+      - "LOG_IP_VAR=${LOG_IP_VAR}"
+      - "CACHE_DRIVER=${CACHE_DRIVER}"
+      - "SESSION_DRIVER=${SESSION_DRIVER}"
+      - "REDIS_HOST=${REDIS_HOST}"
+      - "LIBRENMS_SNMP_COMMUNITY=${LIBRENMS_SNMP_COMMUNITY}"
+      - "LIBRENMS_WEATHERMAP=${LIBRENMS_WEATHERMAP}"
+      - "LIBRENMS_WEATHERMAP_SCHEDULE=${LIBRENMS_WEATHERMAP_SCHEDULE}"
     restart: always
